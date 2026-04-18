@@ -19,6 +19,12 @@
         <el-menu-item index="/report">数据填报</el-menu-item>
         <el-menu-item index="/notice">通知公告</el-menu-item>
         <el-menu-item index="/survey-period">调查期管理</el-menu-item>
+        <el-menu-item index="/user">用户管理</el-menu-item>
+        <el-menu-item index="/role">角色管理</el-menu-item>
+        <el-menu-item index="/district-code">地区编码</el-menu-item>
+        <el-menu-item index="/reason-dict">原因字典</el-menu-item>
+        <el-menu-item index="/analysis">图表分析</el-menu-item>
+        <el-menu-item index="/system-monitor">系统监控</el-menu-item>
       </el-menu>
     </el-aside>
 
