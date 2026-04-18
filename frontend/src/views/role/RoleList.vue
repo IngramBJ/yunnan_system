@@ -42,7 +42,7 @@
 <script setup>
 import { onMounted, reactive, ref } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import request from '../../api/request'
+import { createRole, deleteRole, getRoleList, updateRole } from '../../api/role'
 
 const list = ref([])
 const visible = ref(false)
@@ -54,7 +54,7 @@ const form = reactive({
 })
 
 const load = async () => {
-  list.value = await request.get('/role')
+  list.value = await getRoleList()
 }
 
 const openDialog = (row) => {
@@ -65,9 +65,9 @@ const openDialog = (row) => {
 
 const save = async () => {
   if (editId.value) {
-    await request.put(`/role/${editId.value}`, form)
+    await updateRole(editId.value, form)
   } else {
-    await request.post('/role', form)
+    await createRole(form)
   }
   ElMessage.success('保存成功')
   visible.value = false
@@ -76,7 +76,7 @@ const save = async () => {
 
 const remove = async (id) => {
   await ElMessageBox.confirm('确认删除该角色吗？', '提示', { type: 'warning' })
-  await request.delete(`/role/${id}`)
+  await deleteRole(id)
   ElMessage.success('删除成功')
   await load()
 }

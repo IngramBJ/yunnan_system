@@ -46,7 +46,7 @@
 <script setup>
 import { onMounted, reactive, ref } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import request from '../../api/request'
+import { createDistrictCode, deleteDistrictCode, getDistrictCodeList, updateDistrictCode } from '../../api/districtCode'
 
 const list = ref([])
 const visible = ref(false)
@@ -59,7 +59,7 @@ const form = reactive({
 })
 
 const load = async () => {
-  list.value = await request.get('/district-code')
+  list.value = await getDistrictCodeList()
 }
 
 const openDialog = (row) => {
@@ -70,9 +70,9 @@ const openDialog = (row) => {
 
 const save = async () => {
   if (editId.value) {
-    await request.put(`/district-code/${editId.value}`, form)
+    await updateDistrictCode(editId.value, form)
   } else {
-    await request.post('/district-code', form)
+    await createDistrictCode(form)
   }
   ElMessage.success('保存成功')
   visible.value = false
@@ -81,7 +81,7 @@ const save = async () => {
 
 const remove = async (id) => {
   await ElMessageBox.confirm('确认删除该地区吗？', '提示', { type: 'warning' })
-  await request.delete(`/district-code/${id}`)
+  await deleteDistrictCode(id)
   ElMessage.success('删除成功')
   await load()
 }

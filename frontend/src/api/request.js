@@ -6,7 +6,7 @@ const request = axios.create({
   timeout: 15000
 })
 
-request.interceptors.request.use(config => {
+request.interceptors.request.use((config) => {
   const token = localStorage.getItem('token')
   if (token) {
     config.headers.Authorization = `Bearer ${token}`
@@ -15,17 +15,16 @@ request.interceptors.request.use(config => {
 })
 
 request.interceptors.response.use(
-  res => {
-    const data = res.data
-    if (data.code !== 0) {
-      ElMessage.error(data.message || '请求失败')
-      return Promise.reject(data)
+  (response) => {
+    const res = response.data
+    if (res.code !== 0) {
+      ElMessage.error(res.message || '请求失败')
+      return Promise.reject(new Error(res.message || '请求失败'))
     }
-    return data.data
+    return res.data
   },
-  error => {
-    const msg = error.response?.data?.message || '网络异常'
-    ElMessage.error(msg)
+  (error) => {
+    ElMessage.error(error.response?.data?.message || '网络异常')
     return Promise.reject(error)
   }
 )

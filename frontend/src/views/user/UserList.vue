@@ -64,7 +64,7 @@
 <script setup>
 import { onMounted, reactive, ref } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import request from '../../api/request'
+import { createUser, deleteUser, getUserList, updateUser } from '../../api/user'
 
 const list = ref([])
 const visible = ref(false)
@@ -81,7 +81,7 @@ const form = reactive({
 })
 
 const load = async () => {
-  list.value = await request.get('/user')
+  list.value = await getUserList()
 }
 
 const openDialog = (row) => {
@@ -100,9 +100,9 @@ const openDialog = (row) => {
 
 const save = async () => {
   if (editId.value) {
-    await request.put(`/user/${editId.value}`, form)
+    await updateUser(editId.value, form)
   } else {
-    await request.post('/user', form)
+    await createUser(form)
   }
   ElMessage.success('保存成功')
   visible.value = false
@@ -111,7 +111,7 @@ const save = async () => {
 
 const remove = async (id) => {
   await ElMessageBox.confirm('确认删除该用户吗？', '提示', { type: 'warning' })
-  await request.delete(`/user/${id}`)
+  await deleteUser(id)
   ElMessage.success('删除成功')
   await load()
 }
