@@ -24,7 +24,8 @@ public class EnterpriseServiceImpl implements EnterpriseService {
     @Override
     public Enterprise saveOrUpdate(Long id, EnterpriseSaveRequest request) {
         Enterprise enterprise = id == null ? new Enterprise() :
-                enterpriseRepository.findById(id).orElseThrow(() -> new BizException(HttpStatus.NOT_FOUND.value(), "企业不存在"));
+                enterpriseRepository.findById(id)
+                        .orElseThrow(() -> new BizException(HttpStatus.NOT_FOUND.value(), "企业不存在"));
 
         enterprise.setOrgCode(request.getOrgCode());
         enterprise.setEnterpriseName(request.getEnterpriseName());

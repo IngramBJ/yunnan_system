@@ -25,7 +25,8 @@ public class ReportServiceImpl implements ReportService {
     public Report submit(ReportSubmitRequest request) {
         if (request.getCurrentEmploymentCount() < request.getBaseEmploymentCount()) {
             if (request.getDecreaseType() == null || request.getMainReason() == null || request.getMainReasonDesc() == null) {
-                throw new BizException(HttpStatus.BAD_REQUEST.value(), "当调查期就业人数小于建档期时，就业人数减少类型、主要原因和说明必填");
+                throw new BizException(HttpStatus.BAD_REQUEST.value(),
+                        "当调查期就业人数小于建档期时，就业人数减少类型、主要原因和说明必填");
             }
         }
 
